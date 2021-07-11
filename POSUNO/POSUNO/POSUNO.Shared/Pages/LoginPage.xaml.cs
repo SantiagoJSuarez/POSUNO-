@@ -1,4 +1,6 @@
-﻿using POSUNO.Helpers;
+﻿using POSUNO.Api.Data.Entities;
+using POSUNO.Helpers;
+using POSUNO.Models;
 using System;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
@@ -22,8 +24,32 @@ namespace POSUNO.Pages
             {
                 return;
             }
+            Response response = await ApiService.LoginAsync(new LoginRequest
+            {
+                Email = EmailTextBox.Text,
+                Password = PasswordPasswordBox.Password
+            });
 
-            MessageDialog messageDialog = new MessageDialog("Vamos Bien ! ", "Ok");
+            MessageDialog messageDialog;
+
+            if (!response.IsSuccess)
+            {
+                 messageDialog = new MessageDialog(response.Message,"Ok");
+                await messageDialog.ShowAsync();
+                return;
+
+
+            }
+
+            User user = (User)response.Result; //Devuelve el Usuario 
+            if(user == null )
+            {
+                messageDialog = new MessageDialog("Usuario o contraseña Incorrectos", "Error");
+                await messageDialog.ShowAsync();
+                return;
+            }
+
+            messageDialog  = new MessageDialog($"Bienvenido:  {user.FullName} ", "Ok");
             await messageDialog.ShowAsync();
 
         }
@@ -46,9 +72,9 @@ namespace POSUNO.Pages
                 return false;
             }
 
-            if (string.IsNullOrEmpty(PasswordPasswordBox.Password))
+            if (PasswordPasswordBox.Password.Length < 6)
             {
-                messageDialog = new MessageDialog("Debes Ingresar tu contraseña.", "Error");
+                messageDialog = new MessageDialog("Debes Ingresar tu contraseña de almenos 6 caracteres .", "Error");
                 await messageDialog.ShowAsync();
                 return false;
             }
