@@ -13,7 +13,7 @@ namespace POSUNO.Api.Data
         {
 
         }
-
+        public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<User> Users { get; set; }
 
@@ -22,6 +22,8 @@ namespace POSUNO.Api.Data
             base.OnModelCreating(modelBuilder); 
             modelBuilder.Entity<Product>().HasIndex(p => p.Name).IsUnique(); 
             modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+            modelBuilder.Entity<Customer>().HasIndex(c => c.Email).IsUnique();
+
 
 
         }

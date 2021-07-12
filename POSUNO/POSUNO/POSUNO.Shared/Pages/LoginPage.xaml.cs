@@ -1,4 +1,4 @@
-﻿using POSUNO.Api.Data.Entities;
+﻿using POSUNO.Components;
 using POSUNO.Helpers;
 using POSUNO.Models;
 using System;
@@ -15,6 +15,8 @@ namespace POSUNO.Pages
         public LoginPage()
         {
             InitializeComponent();
+            EmailTextBox.Text = "juan@yopmail.com";
+            PasswordPasswordBox.Password = "123456";
         }
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -24,11 +26,17 @@ namespace POSUNO.Pages
             {
                 return;
             }
+
+            Loader loader = new Loader("Por favor Espere ...");
+            loader.Show();
+
             Response response = await ApiService.LoginAsync(new LoginRequest
             {
                 Email = EmailTextBox.Text,
                 Password = PasswordPasswordBox.Password
             });
+
+            loader.Close();
 
             MessageDialog messageDialog;
 
@@ -49,8 +57,7 @@ namespace POSUNO.Pages
                 return;
             }
 
-            messageDialog  = new MessageDialog($"Bienvenido:  {user.FullName} ", "Ok");
-            await messageDialog.ShowAsync();
+            Frame.Navigate(typeof(MainPage), user);
 
         }
 
