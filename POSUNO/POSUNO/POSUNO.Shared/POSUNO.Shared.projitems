@@ -22,6 +22,7 @@
       <DependentUpon>Loader.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ApiService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Prueba.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\RegexUtilities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Settings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
