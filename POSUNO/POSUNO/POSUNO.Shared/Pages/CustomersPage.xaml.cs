@@ -32,7 +32,7 @@ namespace POSUNO.Pages
 
         public ObservableCollection<Customer> Customers { get; set; }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e) //Mostrar la lista de Clientes
         {
             base.OnNavigatedTo(e);
             LoadCustomersAsync();
