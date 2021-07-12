@@ -29,25 +29,25 @@ namespace POSUNO.Api.Data
 
         private async Task CheckProductsAsync()
         {
-            if (_context.Users.Any())
+            if (!_context.Products.Any())
             {
-                _context.Users.Add(new User
+                Random random = new Random();
+                User user = await _context.Users.FirstOrDefaultAsync();
+                for (int i = 0; i <= 200; i++)
                 {
-                    Email = "juan@yopmail.com",
-                    FirstName = "Juan",
-                    LastName = "Zuluaga",
-                    Password = "123456"
-                });
-
-                _context.Users.Add(new User
-                {
-                    Email = "santiago@yopmail.com",
-                    FirstName = "santiago",
-                    LastName = "jimenez",
-                    Password = "123456"
-                });
+                    _context.Products.Add(new Product
+                    {
+                        Name = $"Producto {i}",
+                        Description = $"Producto{i}",
+                        Price = random.Next(5, 1000),
+                        Stock = random.Next(0, 500),
+                        IsActive = true,
+                        User = user
+                    });
+                }
 
                 await _context.SaveChangesAsync();
+
             }
         }
 
@@ -78,25 +78,25 @@ namespace POSUNO.Api.Data
 
         private async Task CheckUserAsync()
         {
-            if (!_context.Products.Any())
+            if (!_context.Users.Any())
             {
-                Random random = new Random();
-                User user = await _context.Users.FirstOrDefaultAsync();
-                for (int i = 0; i <= 200; i++)
+                _context.Users.Add(new User
                 {
-                    _context.Products.Add(new Product
-                    {
-                        Name = $"Producto {i}",
-                        Description = $"Producto{i}",
-                        Price = random.Next(5, 1000),
-                        Stock = random.Next(0, 500),
-                        IsActive = true,
-                        User = user
-                    });
-                }
+                    Email = "juan@yopmail.com",
+                    FirstName = "Juan",
+                    LastName = "Zuluaga",
+                    Password = "123456"
+                });
+
+                _context.Users.Add(new User
+                {
+                    Email = "santiago@yopmail.com",
+                    FirstName = "santiago",
+                    LastName = "jimenez",
+                    Password = "123456"
+                });
 
                 await _context.SaveChangesAsync();
-
             }
         }
     }
