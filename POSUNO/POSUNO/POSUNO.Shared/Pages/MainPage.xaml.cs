@@ -25,7 +25,7 @@ namespace POSUNO.Pages
         {
             base.OnNavigatedTo(e);
             User = (User)e.Parameter;
-            WelcomeTextBlock.Text = $"Bienvenido: {User.FullName}";
+            WelcomeTextBlock.Text = $"Bienvenid@: {User.FullName}";
 
         }
 
